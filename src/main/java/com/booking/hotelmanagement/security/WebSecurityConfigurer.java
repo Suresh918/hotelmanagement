@@ -19,11 +19,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                  .formLogin()
                  .loginPage("/login")
                  .permitAll()*/
-                .and().headers().frameOptions().sameOrigin()
+                .and().headers().frameOptions().sameOrigin()  //allow use of frame to same origin urls
                 .and()
                 .logout()
                 .permitAll();
-
+        /*  Default basic login copied from the base class*/
         http.formLogin();
         http.httpBasic();
     }
