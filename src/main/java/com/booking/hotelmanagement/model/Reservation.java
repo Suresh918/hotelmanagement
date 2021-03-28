@@ -1,4 +1,6 @@
 package com.booking.hotelmanagement.model;
 
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
@@ -22,7 +23,7 @@ import java.util.Objects;
 //@AbacScan({ChangeRequestMyTeam.class})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Postcode {
+public class Postcode implements Serializable {
     @Column(nullable = false)
     @Pattern(regexp = "[0-9]{4}", message = "Postcode must be 4 digits")
     @NotNull(message = "required")

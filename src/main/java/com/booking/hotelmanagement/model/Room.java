@@ -11,6 +11,7 @@ import org.hibernate.annotations.NaturalId;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ import java.util.Objects;
 //@AbacScan({ChangeRequestMyTeam.class})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Room {
+public class Room implements Serializable {
     @Id
     @GeneratedValue(generator = "sequence-generator")
     @GenericGenerator(

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -25,7 +26,7 @@ import java.util.Objects;
 //@AbacScan({ChangeRequestMyTeam.class})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Address implements Serializable {
     @Id
     @GeneratedValue(generator = "sequence-generator")
     @GenericGenerator(

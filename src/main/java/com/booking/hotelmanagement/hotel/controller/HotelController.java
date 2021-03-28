@@ -1,19 +1,22 @@
 package com.booking.hotelmanagement.hotel.controller;
 
+import com.booking.hotelmanagement.exception.EntityIdNotFoundException;
 import com.booking.hotelmanagement.hotel.service.HotelDataImportService;
 import com.booking.hotelmanagement.hotel.service.HotelService;
+import com.booking.hotelmanagement.model.Hotel;
 import com.booking.hotelmanagement.room.service.RoomService;
 import com.booking.hotelmanagement.security.AuthenticatedContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.util.List;
 
 @Data
 @RestController
@@ -44,12 +47,20 @@ public class HotelController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_ADMIN')")
-    public String getHotels() {
+    public List<Hotel> getHotels() {
         log.info("Hotel home page");
         log.info("user " + this.authenticatedContext.getUser());
         log.info("user roles" + this.authenticatedContext.getRoles());
         return hotelService.getHotels();
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_ADMIN')")
+    public Hotel getHotelByID(@PathVariable("id") long hotelID) throws EntityIdNotFoundException {
+        return hotelService.getHotelById(hotelID).orElseThrow(EntityIdNotFoundException::new);
     }
 
     @GetMapping(value = "/dumpData")
