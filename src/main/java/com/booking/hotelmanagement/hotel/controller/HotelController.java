@@ -1,5 +1,6 @@
 package com.booking.hotelmanagement.hotel.controller;
 
+import com.booking.hotelmanagement.hotel.service.HotelDataImportService;
 import com.booking.hotelmanagement.hotel.service.HotelService;
 import com.booking.hotelmanagement.room.service.RoomService;
 import com.booking.hotelmanagement.security.AuthenticatedContext;
@@ -23,11 +24,13 @@ public class HotelController {
     private HotelService hotelService;
     private RoomService roomService;
     private AuthenticatedContext authenticatedContext;
+    private HotelDataImportService hotelDataImportService;
 
-    public HotelController(HotelService hotelService, RoomService roomService, ObjectMapper objectMapper, AuthenticatedContext authenticatedContext) {
+    public HotelController(HotelService hotelService, HotelDataImportService hotelDataImportService, RoomService roomService, ObjectMapper objectMapper, AuthenticatedContext authenticatedContext) {
         this.hotelService = hotelService;
         this.roomService = roomService;
         this.authenticatedContext = authenticatedContext;
+        this.hotelDataImportService = hotelDataImportService;
     }
 
     @GetMapping(value = "/search")
@@ -44,8 +47,15 @@ public class HotelController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_ADMIN')")
     public String getHotels() {
         log.info("Hotel home page");
-        log.info("user "+this.authenticatedContext.getUser());
-        log.info("user roles"+this.authenticatedContext.getRoles());
+        log.info("user " + this.authenticatedContext.getUser());
+        log.info("user roles" + this.authenticatedContext.getRoles());
         return hotelService.getHotels();
+    }
+
+    @GetMapping(value = "/dumpData")
+    public String dumpData() {
+        log.info("HotelController : dumpData");
+        this.hotelDataImportService.dumpData();
+        return "data imported successfully";
     }
 }

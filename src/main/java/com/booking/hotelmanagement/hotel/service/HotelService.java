@@ -1,6 +1,10 @@
 package com.booking.hotelmanagement.hotel.service;
 
+import com.booking.hotelmanagement.exception.UnauthorizedException;
 import com.booking.hotelmanagement.hotel.repository.HotelRepository;
+import com.booking.hotelmanagement.model.Address;
+import com.booking.hotelmanagement.model.Hotel;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,7 @@ public class HotelService {
 
     @PreAuthorize("hasRole('SERVICE')")
     public String getHotels() {
-        return "welcome to Hotel Management";
+        throw new UnauthorizedException();
+        // return "welcome to Hotel Management";
     }
 }

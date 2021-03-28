@@ -1,6 +1,7 @@
 package com.booking.hotelmanagement.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import java.util.Objects;
 @Setter
 //@AbacScan({ChangeRequestMyTeam.class})
 @NoArgsConstructor
+@AllArgsConstructor
 public class Room {
     @Id
     @GeneratedValue(generator = "sequence-generator")

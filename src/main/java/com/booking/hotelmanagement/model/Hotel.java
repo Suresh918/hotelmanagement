@@ -1,6 +1,7 @@
 package com.booking.hotelmanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ import java.util.Set;
 @Setter
 //@AbacScan({ChangeRequestMyTeam.class})
 @NoArgsConstructor
+@AllArgsConstructor
 public class Hotel implements Serializable {
 
     @Id
@@ -47,7 +49,7 @@ public class Hotel implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(optional=true, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "address_id")
     @JsonIgnore
@@ -59,10 +61,10 @@ public class Hotel implements Serializable {
     @Column(nullable = false)
     private String email;
 
+    // TODO: created date is getting inserted as nul. Need to fix this
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
-
 
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
@@ -94,6 +96,15 @@ public class Hotel implements Serializable {
     @Override
     public String toString() {
         return "" + this.id;
+    }
+
+    /**
+     * Adds the {@code Room} to this {@code Hotel} and sets the bidirectional relationship
+     * of the {@code Room}.
+     */
+    public void addRoom(Room room) {
+        rooms.add(room);
+        room.setHotel(this);
     }
 
 }
